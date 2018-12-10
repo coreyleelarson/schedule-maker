@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    'input button'
+    'table table';
+  grid-template-columns: 1fr max-content;
+}
+
+.header {
+  grid-area: header;
+}
+
+.input {
+  grid-area: input;
+}
+
+.button {
+  grid-area: button;
+}
+
+.table {
+  grid-area: table;
+}
