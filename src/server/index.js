@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
 import history from 'connect-history-api-fallback';
+import { exec } from 'child_process';
 import express from 'express';
 
 const app = express();
@@ -7,11 +8,11 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/api/generate', (request, response) => {
-  const { numOfCourts, numOfRounds, showProgResults, teams } = request.body;
-  console.log('request body', request.body);
+  // const { numOfCourts, numOfRounds, showProgResults, teams } = request.body;
+  // This is where I will execute the python script from...
 
   setTimeout(() => {
-    response.send({ numOfCourts, numOfRounds, showProgResults, teams });
+    response.send({ data: request.body });
   }, 3000);
 });
 

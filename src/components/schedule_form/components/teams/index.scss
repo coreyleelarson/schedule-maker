@@ -7,6 +7,10 @@
   grid-template-columns: 1fr max-content;
 }
 
+.divider {
+  grid-area: divider;
+}
+
 .header {
   grid-area: header;
 }
@@ -17,6 +21,10 @@
 
 .button {
   grid-area: button;
+}
+
+.heading {
+  grid-area: heading;
 }
 
 .table {
