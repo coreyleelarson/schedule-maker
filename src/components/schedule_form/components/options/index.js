@@ -7,42 +7,34 @@ import ScheduleContext from 'contexts/schedule';
 import styles from './index.scss';
 
 function Options() {
-  const {
-    isGenerating,
-    numOfCourts,
-    setNumOfCourts,
-    numOfRounds,
-    setNumOfRounds,
-    showProgResults,
-    setShowProgResults,
-  } = useContext(ScheduleContext);
+  const { actions, schedule } = useContext(ScheduleContext);
 
   return (
     <div className={styles['grid']}>
       <TextField
         className={styles.courts}
-        disabled={isGenerating}
+        disabled={schedule.isGenerating}
         label="# of Courts"
-        onChange={e => setNumOfCourts(Number(e.target.value))}
+        onChange={e => actions.setNumOfCourts(e.target.value)}
         type="number"
-        value={numOfCourts}
+        value={String(schedule.numOfCourts)}
       />
       <TextField
         className={styles['rounds']}
-        disabled={isGenerating}
+        disabled={schedule.isGenerating}
         label="# of Rounds"
-        onChange={e => setNumOfRounds(Number(e.target.value))}
+        onChange={e => actions.setNumOfRounds(e.target.value)}
         type="number"
-        value={numOfRounds}
+        value={String(schedule.numOfRounds)}
       />
       <FormGroup row>
         <FormControlLabel
           className={styles['progressive']}
           control={
             <Checkbox
-              checked={showProgResults}
-              disabled={isGenerating}
-              onChange={e => { setShowProgResults(e.target.checked) }}
+              checked={schedule.showProgResults}
+              disabled={schedule.isGenerating}
+              onChange={e => { actions.setShowProgResults(e.target.checked) }}
             />
           }
           label="Show Progressive Results"

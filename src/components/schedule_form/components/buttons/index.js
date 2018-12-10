@@ -4,23 +4,23 @@ import ScheduleContext from 'contexts/schedule';
 import styles from './index.scss';
 
 function Buttons() {
-  const { isGenerating, generate, reset } = useContext(ScheduleContext);
+  const { actions, schedule } = useContext(ScheduleContext);
 
   return (
     <div className={styles['grid']}>
       <Button
-        disabled={isGenerating}
+        disabled={schedule.isGenerating}
         variant="contained"
         color="primary"
-        onClick={generate}
+        onClick={actions.generate}
       >
         Generate
       </Button>
       <Button
-        disabled={isGenerating}
+        disabled={schedule.isGenerating}
         variant="contained"
         color="secondary"
-        onClick={reset}
+        onClick={actions.reset}
       >
         Reset
       </Button>

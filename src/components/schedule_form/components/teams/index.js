@@ -10,13 +10,13 @@ import ScheduleContext from 'contexts/schedule';
 import styles from './index.scss';
 
 function Teams({ className }) {
-  const { isGenerating, teams, addTeam } = useContext(ScheduleContext);
+  const { isGenerating, schedule, actions } = useContext(ScheduleContext);
   const [team, setTeam] = useState('');
 
   const handleAddTeam = () => {
     if (team.length) {
       setTeam('');
-      addTeam(team);
+      actions.addTeam(team);
     }
   };
 
@@ -39,14 +39,14 @@ function Teams({ className }) {
         disabled={!team.length || isGenerating}
         variant="outlined"
         color="primary"
-        onClick={addTeam}
+        onClick={handleAddTeam}
       >
         Add Team
       </Button>
       <Table className={styles['table']}>
         <TableBody>
-          {teams.length > 0 ?
-            teams.map((team, index) => (
+          {schedule.teams.length > 0 ?
+            schedule.teams.map((team, index) => (
               <TableRow key={index}>
                 <TableCell>{team}</TableCell>
               </TableRow>

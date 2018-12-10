@@ -1,23 +1,32 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 
 const ScheduleContext = createContext(null);
 
-export function ScheduleProvider({ children }) {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [showProgResults, setShowProgResults] = useState(false);
-  const [numOfCourts, setNumOfCourts] = useState(0);
-  const [numOfRounds, setNumOfRounds] = useState(0);
-  const [teams, setTeams] = useState([]);
+const defaultState = { numOfCourts: 0, numOfRounds: 0, showProgResults: false, teams: [] };
 
-  const reset = () => {
-    setNumOfCourts(0);
-    setNumOfRounds(0);
-    setShowProgResults(false);
-    setTeams([]);
-  };
+const reducer = (state = {}, { type, payload }) => {
+  switch (type) {
+    case 'SET_NUM_OF_COURTS':
+      return { ...state, numOfCourts: parseInt(payload.numOfCourts, 10) };
+    case 'SET_NUM_OF_ROUNDS':
+      return { ...state, numOfRounds: parseInt(payload.numOfRounds, 10) };
+    case 'SET_SHOW_PROG_RESULTS':
+      return { ...state, showProgResults: payload.showProgResults };
+    case 'ADD_TEAM':
+      return { ...state, teams: [...state.teams, payload.team] };
+    case 'RESET':
+      return defaultState;
+    default:
+      return state;
+  }
+}
+
+export function ScheduleProvider({ children }) {
+  const [schedule, dispatch] = useReducer(reducer, defaultState);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const generate = async () => {
-    if (!teams.length) {
+    if (!schedule.teams.length) {
       return;
     }
 
@@ -27,12 +36,7 @@ export function ScheduleProvider({ children }) {
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
         },
-        body: JSON.stringify({
-          numOfCourts,
-          numOfRounds,
-          showProgResults,
-          teams,
-        }),
+        body: JSON.stringify(schedule),
       });
       const data = await response.json();
       console.log('data', data);
@@ -46,16 +50,22 @@ export function ScheduleProvider({ children }) {
 
   return (
     <ScheduleContext.Provider value={{
-      numOfCourts,
-      setNumOfCourts,
-      numOfRounds,
-      setNumOfRounds,
-      showProgResults,
-      setShowProgResults,
-      teams,
-      addTeam: team => setTeams([...teams, team]),
-      reset,
-      generate,
+      actions: {
+        generate,
+        reset: () => dispatch({ type: 'RESET' }),
+        setNumOfCourts: numOfCourts =>
+          dispatch({ type: 'SET_NUM_OF_COURTS', payload: { numOfCourts }}),
+        setNumOfRounds: numOfRounds =>
+          dispatch({ type: 'SET_NUM_OF_ROUNDS', payload: { numOfRounds }}),
+        setShowProgResults: showProgResults =>
+          dispatch({ type: 'SET_SHOW_PROG_RESULTS', payload: { showProgResults }}),
+        addTeam: team =>
+          dispatch({ type: 'ADD_TEAM', payload: { team }}),
+      },
+      schedule: {
+        isGenerating,
+        ...schedule,
+      },
     }}>
       {children}
     </ScheduleContext.Provider>

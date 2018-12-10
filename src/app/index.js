@@ -1,3 +1,4 @@
+import Typography from '@material-ui/core/Typography';
 import React, { Fragment } from 'react';
 import ScheduleForm from 'components/schedule_form';
 import styles from './index.scss';
@@ -7,7 +8,8 @@ function App() {
     <Fragment>
       <main>
         <div className={styles.container}>
-          <ScheduleForm />
+          <Typography variant="h2">Schedule Generator</Typography>
+          {true && <ScheduleForm />}
         </div>
       </main>
     </Fragment>
