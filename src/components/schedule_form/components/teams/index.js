@@ -1,11 +1,11 @@
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import DeleteIcon from '@material-ui/icons/Delete';
 import classnames from 'classnames';
 import React, { useContext, useState } from 'react';
 import ScheduleContext from 'contexts/schedule';
@@ -51,6 +51,7 @@ function Teams({ className }) {
             schedule.teams.map((team, index) => (
               <TableRow key={index}>
                 <TableCell>{team}</TableCell>
+                <TableCell><IconButton onClick={() => actions.removeTeam(team)}><DeleteIcon /></IconButton></TableCell>
               </TableRow>
             )) : (
               <TableRow>

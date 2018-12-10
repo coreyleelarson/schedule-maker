@@ -14,6 +14,8 @@ const reducer = (state = {}, { type, payload }) => {
       return { ...state, showProgResults: payload.showProgResults };
     case 'ADD_TEAM':
       return { ...state, teams: [...state.teams, payload.team] };
+    case 'REMOVE_TEAM':
+      return { ...state, teams: [...state.teams.filter(team => team !== payload.team) ] };
     case 'RESET':
       return defaultState;
     default:
@@ -62,6 +64,8 @@ export function ScheduleProvider({ children }) {
           dispatch({ type: 'SET_SHOW_PROG_RESULTS', payload: { showProgResults }}),
         addTeam: team =>
           dispatch({ type: 'ADD_TEAM', payload: { team }}),
+        removeTeam: team =>
+          dispatch({ type: 'REMOVE_TEAM', payload: { team }}),
       },
       schedule: {
         isGenerating,
