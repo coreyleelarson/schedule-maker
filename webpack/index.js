@@ -19,7 +19,11 @@ const config = [
   }
 
   const compiler = webpack(config);
-  new FriendlyErrorsPlugin().apply(compiler);
+  new FriendlyErrorsPlugin({
+    compilationSuccessInfo: {
+      messages: ['You application is running here http://localhost:3000'],
+    },
+  }).apply(compiler);
 
   isWatch
     ? compiler.watch({}, () => {})

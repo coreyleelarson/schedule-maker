@@ -3,3 +3,15 @@
   max-width: 1200px;
   padding-inline: 20px;
 }
+
+.loader {
+  background-color: rgba(255, 255, 255, 0.5);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

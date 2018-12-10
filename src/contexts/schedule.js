@@ -31,6 +31,7 @@ export function ScheduleProvider({ children }) {
     }
 
     try {
+      setIsGenerating(true);
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {

@@ -9,7 +9,10 @@ app.use(bodyParser.json());
 app.post('/api/generate', (request, response) => {
   const { numOfCourts, numOfRounds, showProgResults, teams } = request.body;
   console.log('request body', request.body);
-  response.send({ numOfCourts, numOfRounds, showProgResults, teams });
+
+  setTimeout(() => {
+    response.send({ numOfCourts, numOfRounds, showProgResults, teams });
+  }, 3000);
 });
 
 app.use(history());
